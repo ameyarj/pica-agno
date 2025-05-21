@@ -1,5 +1,4 @@
 import os
-import logging
 from dotenv import load_dotenv
 
 from agno.agent import Agent as AgnoAgent
@@ -12,7 +11,6 @@ from pica_langchain import PicaClient, create_pica_agent
 from pica_langchain.models import PicaClientOptions
 from langchain_openai import ChatOpenAI
 from langchain.agents import AgentType
-
 
 load_dotenv()
 PICA_SECRET = os.getenv("PICA_SECRET")
@@ -69,7 +67,7 @@ def create_integrated_agent() -> AgnoAgent:
     agno_agent = AgnoAgent(
         name="Agno-Pica Assistant",
         model=OpenAIChat(id="gpt-4o"),
-        reasoning=True,
+        reasoning=True,  
         tools=[
             ReasoningTools(add_instructions=True),
             use_pica_agent,
@@ -93,14 +91,16 @@ def create_integrated_agent() -> AgnoAgent:
         add_datetime_to_instructions=True,
         markdown=True,
         show_tool_calls=False,
-        debug_mode=False
+        debug_mode=False,
+        verbose=False,  
+        show_reasoning=False  
     )
     
     return agno_agent
 
 def main():
     """Main function to run the Agno-PICA integrated agent."""
-    print("\n=== Agno-PICA Integration Terminal fancied Terminal ===")
+    print("\n=== Agno-PICA Integration Terminal ===")
     print("(Type 'exit' to quit)")
     print("-------------------------------------")
 
@@ -123,7 +123,9 @@ def main():
                 response = agent.run(
                     user_input,
                     stream=True,
-                    show_full_reasoning=False
+                    show_full_reasoning=False,
+                    verbose=False,  
+                    show_reasoning=False  
                 )
 
                 if hasattr(response, '__iter__'):
