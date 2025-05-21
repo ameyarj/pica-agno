@@ -92,8 +92,6 @@ def create_integrated_agent() -> AgnoAgent:
         markdown=True,
         show_tool_calls=False,
         debug_mode=False,
-        verbose=False,  
-        show_reasoning=False  
     )
     
     return agno_agent
@@ -124,8 +122,8 @@ def main():
                     user_input,
                     stream=True,
                     show_full_reasoning=False,
-                    verbose=False,  
-                    show_reasoning=False  
+                    verbose=False,
+                    show_reasoning=False 
                 )
 
                 if hasattr(response, '__iter__'):
